@@ -1,10 +1,14 @@
 /*
- * Copyright 2011-2016 The OpenSSL Project Authors. All Rights Reserved.
+ * Copyright 2004-2018 The OpenSSL Project Authors. All Rights Reserved.
+ * Copyright (c) 2004, EdelKey Project. All Rights Reserved.
  *
  * Licensed under the OpenSSL license (the "License").  You may not use
  * this file except in compliance with the License.  You can obtain a copy
  * in the file LICENSE in the source distribution or at
  * https://www.openssl.org/source/license.html
+ *
+ * Originally written by Christophe Renou and Peter Sylvester,
+ * for the EdelKey project.
  */
 
 #ifndef OPENSSL_NO_SRP
@@ -418,7 +422,7 @@ SRP_user_pwd *SRP_VBASE_get1_by_user(SRP_VBASE *vb, char *username)
     if (!SRP_user_pwd_set_ids(user, username, NULL))
         goto err;
 
-    if (RAND_bytes(digv, SHA_DIGEST_LENGTH) <= 0)
+    if (RAND_priv_bytes(digv, SHA_DIGEST_LENGTH) <= 0)
         goto err;
     ctxt = EVP_MD_CTX_new();
     if (ctxt == NULL

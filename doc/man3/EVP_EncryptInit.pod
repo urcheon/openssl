@@ -59,33 +59,33 @@ EVP_enc_null
  void EVP_CIPHER_CTX_free(EVP_CIPHER_CTX *ctx);
 
  int EVP_EncryptInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *type,
-                        ENGINE *impl, unsigned char *key, unsigned char *iv);
+                        ENGINE *impl, const unsigned char *key, const unsigned char *iv);
  int EVP_EncryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out,
                        int *outl, const unsigned char *in, int inl);
  int EVP_EncryptFinal_ex(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl);
 
  int EVP_DecryptInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *type,
-                        ENGINE *impl, unsigned char *key, unsigned char *iv);
+                        ENGINE *impl, const unsigned char *key, const unsigned char *iv);
  int EVP_DecryptUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out,
                        int *outl, const unsigned char *in, int inl);
  int EVP_DecryptFinal_ex(EVP_CIPHER_CTX *ctx, unsigned char *outm, int *outl);
 
  int EVP_CipherInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *type,
-                       ENGINE *impl, unsigned char *key, unsigned char *iv, int enc);
+                       ENGINE *impl, const unsigned char *key, const unsigned char *iv, int enc);
  int EVP_CipherUpdate(EVP_CIPHER_CTX *ctx, unsigned char *out,
-                      int *outl, unsigned char *in, int inl);
+                      int *outl, const unsigned char *in, int inl);
  int EVP_CipherFinal_ex(EVP_CIPHER_CTX *ctx, unsigned char *outm, int *outl);
 
  int EVP_EncryptInit(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *type,
-                     unsigned char *key, unsigned char *iv);
+                     const unsigned char *key, const unsigned char *iv);
  int EVP_EncryptFinal(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl);
 
  int EVP_DecryptInit(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *type,
-                     unsigned char *key, unsigned char *iv);
+                     const unsigned char *key, const unsigned char *iv);
  int EVP_DecryptFinal(EVP_CIPHER_CTX *ctx, unsigned char *outm, int *outl);
 
  int EVP_CipherInit(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *type,
-                    unsigned char *key, unsigned char *iv, int enc);
+                    const unsigned char *key, const unsigned char *iv, int enc);
  int EVP_CipherFinal(EVP_CIPHER_CTX *ctx, unsigned char *outm, int *outl);
 
  int EVP_CIPHER_CTX_set_padding(EVP_CIPHER_CTX *x, int padding);
@@ -99,7 +99,6 @@ EVP_enc_null
 
  int EVP_CIPHER_nid(const EVP_CIPHER *e);
  int EVP_CIPHER_block_size(const EVP_CIPHER *e);
- int EVP_CIPHER_key_length(const EVP_CIPHER *e)
  int EVP_CIPHER_key_length(const EVP_CIPHER *e);
  int EVP_CIPHER_iv_length(const EVP_CIPHER *e);
  unsigned long EVP_CIPHER_flags(const EVP_CIPHER *e);
@@ -456,20 +455,6 @@ C<taglen> must be between 1 and 16 (B<POLY1305_BLOCK_SIZE>) inclusive.
 This call is only valid when decrypting data.
 
 =back
-
-=head1 Random numbers
-
-The following can be used to select the DRBG that is used to generate the random
-numbers:
-
-EVP_CIPHER_CTX_ctrl(ctx, EVP_CTRL_SET_DRBG, 0, drbg)
-
-The following can be used to get the DRBG:
-
-EVP_CIPHER_CTX_ctrl(ctx, EVP_CTRL_GET_DRBG, 0, &drbg)
-
-By default it's set to NULL which results in RAND_bytes() being used.
-
 
 =head1 NOTES
 
